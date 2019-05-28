@@ -1,10 +1,10 @@
 package sqa_project;
 
 public class Student {
-	private int id;
-	private String name;
-	private int grade;
-	private String[] want;
+	private int id;        //准考證號碼
+	private String name;   //考生名
+	private int grade;     //成績
+	private String[] want; //志願
 	
 	public int getId() {
 		return id;

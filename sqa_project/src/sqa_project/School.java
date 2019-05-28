@@ -1,15 +1,18 @@
 package sqa_project;
 
+import java.util.ArrayList;
+
 public class School {
-	private int id;
-	private String name;
-	private int grade;
-	private int quota;
+	private String id;    //校系代碼
+	private String name;  //名稱
+	private int grade;    //分數門檻
+	private int quota;    //名額
+	private ArrayList<Integer> list = new ArrayList<Integer>();   //錄取學生
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -33,5 +36,16 @@ public class School {
 	public void setQuota(int quota) {
 		this.quota = quota;
 	}
+	
+	public ArrayList<Integer> getList() {
+		return list;
+	}
+	public void setList(ArrayList<Integer> list) {
+		this.list = list;
+	}
+	public void addList(int student_id) {
+		this.list.add(student_id);
+	}
+	
 	
 }
