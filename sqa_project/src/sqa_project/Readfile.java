@@ -2,6 +2,7 @@ package sqa_project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -11,46 +12,45 @@ public class Readfile {
 		Readfile r = new Readfile();
 		try {
 			r.loadStudentList();
+			ArrayList<School> school = r.loadSchoolList();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}*/
 
-	public School[] loadSchoolList() throws FileNotFoundException {
+	public ArrayList<School> loadSchoolList() throws FileNotFoundException {
 		Scanner line = new Scanner(new File("res/school.csv"));
 		String[] value = null;
-		School[] school = new School[5];
-		int i = 0;
+		ArrayList<School> schoolList = new ArrayList<School>();
 
 		while (line.hasNextLine()) {
 			value = line.nextLine().split(",");
-			school[i] = new School();
-			school[i].setId(value[0]);
-			school[i].setName(value[1]);
-			school[i].setGrade(Integer.parseInt(value[2]));
-			school[i].setQuota(Integer.parseInt(value[3]));
-			i++;
+			School school = new School();
+			school.setId(value[0]);
+			school.setName(value[1]);
+			school.setGrade(Integer.parseInt(value[2]));
+			school.setQuota(Integer.parseInt(value[3]));
+			schoolList.add(school);
 		}
 		line.close();
-		return school;
+		return schoolList;
 	}
 
-	public Student[] loadStudentList() throws FileNotFoundException {
+	public ArrayList<Student> loadStudentList() throws FileNotFoundException {
 		Scanner line = new Scanner(new File("res/student.csv"));
 		String[] value = null;
-		Student[] student = new Student[10];
-		int i = 0;
+		ArrayList<Student> studentList = new ArrayList<Student>();
 		while (line.hasNextLine()) {
 			value = line.nextLine().split(",");
-			student[i] = new Student();
-			student[i].setId(Integer.parseInt(value[0]));
-			student[i].setName(value[1]);
-			student[i].setGrade(Integer.parseInt(value[2]));
-			student[i].setWant(Arrays.copyOfRange(value, 3, 8));
-			i++;
+			Student student = new Student();
+			student.setId(Integer.parseInt(value[0]));
+			student.setName(value[1]);
+			student.setGrade(Integer.parseInt(value[2]));
+			student.setWant(Arrays.copyOfRange(value, 3, 8));
+			studentList.add(student);
 		}
 		line.close();
-		return student;
+		return studentList;
 	}
 
 }
