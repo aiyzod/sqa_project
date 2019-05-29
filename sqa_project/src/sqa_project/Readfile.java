@@ -8,16 +8,6 @@ import java.util.Scanner;
 
 public class Readfile {
 
-	/*public static void main(String[] args) {
-		Readfile r = new Readfile();
-		try {
-			r.loadStudentList();
-			ArrayList<School> school = r.loadSchoolList();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}*/
-
 	public ArrayList<School> loadSchoolList() throws FileNotFoundException {
 		Scanner line = new Scanner(new File("res/school.csv"));
 		String[] value = null;
@@ -30,6 +20,7 @@ public class Readfile {
 			school.setName(value[1]);
 			school.setGrade(Integer.parseInt(value[2]));
 			school.setQuota(Integer.parseInt(value[3]));
+			school.setReady(Integer.parseInt(value[4]));
 			schoolList.add(school);
 		}
 		line.close();
