@@ -1,6 +1,7 @@
 package sqa_project;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,59 +13,67 @@ public class Choose {
 		Choose c = new Choose();
 		Readfile r = new Readfile();
 		try {
-			c.choose(r.loadSchoolList(), r.loadStudentList());
+			r.output(c.choose(r.loadSchoolList(), r.loadStudentList()));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
 	}
 
-	public void choose(ArrayList<School> schoolList, ArrayList<Student> studentList) {
+	// 選出正備取
+	public ArrayList<School> choose(ArrayList<School> schoolList, ArrayList<Student> studentList) {
 		for (int i = 0; i < schoolList.size(); i++) {
 			for (int j = 0; j < studentList.size(); j++) {
 				if (Arrays.asList(studentList.get(j).getWant()).contains(schoolList.get(i).getId())) {
 					if (studentList.get(j).getGrade() >= schoolList.get(i).getGrade()) {
-						checkQuota(schoolList.get(i), studentList.get(j));
+						schoolList.get(i).getList().add(studentList.get(j));
 						studentListSort(schoolList.get(i).getList());
 					}
 				}
 			}
+			selectStudent(schoolList.get(i));
 		}
 		for (int i = 0; i < schoolList.size(); i++) {
 			for (int j = 0; j < schoolList.get(i).getList().size(); j++) {
-				System.out.print(schoolList.get(i).getList().get(j).getId() + " ");
+				System.out.print(schoolList.get(i).getList().get(j).getGrade() + " ");
 			}
 			System.out.println();
 		}
+		return schoolList;
 	}
 
-	public void checkQuota(School school, Student student) {
-		int size = school.getList().size() - 1;
-		int grade;
-		if (size == -1) {
-			System.out.println("--------0--------");
-			school.getList().add(student);
-			return;
-		}
-		grade = school.getList().get(size).getGrade();
-		if (size + 1 == school.getQuota_new() + school.getReady_new()) {
-			if (grade == student.getGrade()) {
-				System.out.println("--------1--------");
-				school.setQuota_new(school.getQuota_new() + 1);
-				school.getList().add(student);
-			} else if (student.getGrade() > grade) {
-				System.out.println(grade + "--------2--------" + student.getGrade());
-				school.getList().set(size, student);
-			} else {
-				System.out.println("--------3--------");
-				return;
+	// 依成績篩選學生
+	public void selectStudent(School school) {
+		int size;
+		int count = 0;
+		int total = school.getQuota() + school.getReady();
+		int temp = -1;
+		for (int i = 0; i < school.getList().size(); i++) {
+			if (temp != school.getList().get(i).getGrade()) {
+				temp = school.getList().get(i).getGrade();
+				count++;
 			}
-		} else if (size + 1 < school.getQuota_new()) {
-			System.out.println(size + "--------4--------" + school.getQuota_new());
-			school.getList().add(student);
+		}
+		size = count;
+		count = 0;
+		if (total < size) {
+			temp = -1;
+			for (int i = school.getList().size() - 1; i >= 0; i--) {
+				if (temp != school.getList().get(i).getGrade()) {
+					temp = school.getList().get(i).getGrade();
+					count++;
+					if (count > size - total) {
+						break;
+					}
+				}
+				school.getList().remove(i);
+			}
 		}
 	}
 
+	// 錄取名單依成績排序
 	public void studentListSort(ArrayList<Student> list) {
 		Collections.sort(list, new Comparator<Student>() {
 			@Override

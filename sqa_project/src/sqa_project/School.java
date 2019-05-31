@@ -6,11 +6,9 @@ public class School {
 	private String id; // 校系代碼
 	private String name; // 名稱
 	private int grade; // 分數門檻
-	private int quota; // 名額
-	private int ready;
+	private int quota; // 正取名額
+	private int ready; // 備取名額
 	private ArrayList<Student> list = new ArrayList<Student>(); // 錄取學生
-	private int quota_new;
-	private int ready_new;
 
 	public String getId() {
 		return id;
@@ -42,7 +40,6 @@ public class School {
 
 	public void setQuota(int quota) {
 		this.quota = quota;
-		this.setQuota_new(quota);
 	}
 
 	public int getReady() {
@@ -51,7 +48,6 @@ public class School {
 
 	public void setReady(int ready) {
 		this.ready = ready;
-		this.ready_new = ready;
 	}
 
 	public ArrayList<Student> getList() {
@@ -65,21 +61,4 @@ public class School {
 	public void addList(Student student_id) {
 		this.list.add(student_id);
 	}
-
-	public int getQuota_new() {
-		return quota_new;
-	}
-
-	public void setQuota_new(int quota_new) {
-		this.quota_new = quota_new;
-	}
-
-	public int getReady_new() {
-		return ready_new;
-	}
-
-	public void setReady_new(int ready_new) {
-		this.ready_new = ready_new;
-	}
-
 }
