@@ -53,7 +53,7 @@ public class Readfile {
 	public void output(ArrayList<School> schoolList) throws IOException {
 		int count = 0;
 		int temp = -1;
-		int index = 1;
+		int index = 0;
 		File write = new File("res/output.txt");
 		write.createNewFile();
 		BufferedWriter bw = new BufferedWriter(new FileWriter("res/output.txt"));
@@ -80,6 +80,7 @@ public class Readfile {
 				bw.newLine();
 			}
 			bw.newLine();
+			index = 0;
 			count = 0;
 			temp = -1;
 		}
