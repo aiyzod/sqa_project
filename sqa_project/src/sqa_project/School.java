@@ -58,7 +58,7 @@ public class School {
 		this.list = list;
 	}
 
-	public void addList(Student student_id) {
+	public void addList(Student student_id) { // 新增學生至錄取清單
 		this.list.add(student_id);
 	}
 }
