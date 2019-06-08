@@ -1,4 +1,4 @@
-package sqa_project;
+package sqa_project; 
 
 public class Student {
 	private int id; // 准考證號碼
