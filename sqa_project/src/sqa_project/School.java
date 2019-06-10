@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class School {
 	private String id; // 校系代碼
 	private String name; // 名稱
-	private int grade; // 分數門檻
-	private int quota; // 正取名額
-	private int ready; // 備取名額
+	private int grade = 0; // 分數門檻
+	private int quota = 0; // 正取名額
+	private int ready = 0; // 備取名額
 	private ArrayList<Student> list = new ArrayList<Student>(); // 錄取學生
 
 	public String getId() {

@@ -1,25 +1,11 @@
 package sqa_project;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class Choose {
-
-	public static void main(String[] args) {
-		Choose c = new Choose();
-		Readfile r = new Readfile();
-		try {
-			r.output(c.choose(r.loadSchoolList("res/school.csv"), r.loadStudentList("res/student.csv"))); // 讀檔後選出正備取並輸出榜單
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	// 選出正備取
 	public ArrayList<School> choose(ArrayList<School> schoolList, ArrayList<Student> studentList) {
@@ -50,7 +36,7 @@ public class Choose {
 		}
 		if (total < size) {
 			temp = -1;
-			for (int i = school.getList().size() - 1; i >= 0; i--) { // 從成績最低的學生開始篩選
+			for (int i = school.getList().size() - 1; i >= total; i--) { // 從成績最低的學生開始篩選
 				if (temp != school.getList().get(i).getGrade()) {
 					temp = school.getList().get(i).getGrade();
 					count++;

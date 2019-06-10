@@ -1,8 +1,8 @@
-package sqa_project; 
+package sqa_project;
 
 public class Student {
 	private int id; // 准考證號碼
-	private String name; // 考生名
+	private String name; // 考生名字
 	private int grade; // 成績
 	private String[] want; // 學校清單
 

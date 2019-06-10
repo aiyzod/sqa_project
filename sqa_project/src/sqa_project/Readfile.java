@@ -3,7 +3,6 @@ package sqa_project;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,14 +11,17 @@ import java.util.Scanner;
 public class Readfile {
 
 	// 讀取學校資料 ( .CSV檔 )
-	public ArrayList<School> loadSchoolList(String filename) throws FileNotFoundException { // 傳入檔案路徑
-		Scanner line = new Scanner(new File(filename));
+	public ArrayList<School> loadSchoolList(String filename) throws Exception { // 傳入檔案路徑
+		Scanner line = new Scanner(new File(filename), "utf-8");
 		String[] value = null;
 		ArrayList<School> schoolList = new ArrayList<School>();
 
 		while (line.hasNextLine()) {
 			value = line.nextLine().split(",");
 			School school = new School();
+			if (Integer.parseInt(value[2]) < 0 || Integer.parseInt(value[2]) > 100) {
+				throw new Exception("學校資料  " + value[0] + " " + value[1] + "  成績異常");
+			}
 			school.setId(value[0]);
 			school.setName(value[1]);
 			school.setGrade(Integer.parseInt(value[2]));
@@ -32,13 +34,16 @@ public class Readfile {
 	}
 
 	// 讀取學生資料
-	public ArrayList<Student> loadStudentList(String filename) throws FileNotFoundException { // 傳入檔案路徑
-		Scanner line = new Scanner(new File(filename));
+	public ArrayList<Student> loadStudentList(String filename) throws Exception { // 傳入檔案路徑
+		Scanner line = new Scanner(new File(filename), "utf-8");
 		String[] value = null;
 		ArrayList<Student> studentList = new ArrayList<Student>();
 		while (line.hasNextLine()) {
 			value = line.nextLine().split(",");
 			Student student = new Student();
+			if (Integer.parseInt(value[2]) < 0 || Integer.parseInt(value[2]) > 100) {
+				throw new Exception("學生資料  " + value[0] + "  " + value[1] + "  成績異常");
+			}
 			student.setId(Integer.parseInt(value[0]));
 			student.setName(value[1]);
 			student.setGrade(Integer.parseInt(value[2]));
@@ -50,13 +55,13 @@ public class Readfile {
 	}
 
 	// 產生榜單
-	public void output(ArrayList<School> schoolList) throws IOException {
+	public void output(ArrayList<School> schoolList, String filename) throws IOException {
 		int count = 0; // 計算不同分學生數量
 		int temp = -1; // 判斷成績是否重複
 		int index = 0; // 計算順位
 		File write = new File("res/output.txt"); // 若檔案不存在則新增檔案
 		write.createNewFile();
-		BufferedWriter bw = new BufferedWriter(new FileWriter("res/output.txt"));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
 		for (int i = 0; i < schoolList.size(); i++) {
 			bw.write(schoolList.get(i).getId() + " " + schoolList.get(i).getName()); // 寫入學校代碼和名稱
 			bw.newLine(); // 寫入換行字元
